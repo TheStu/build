@@ -11,6 +11,7 @@ gem 'carrierwave', '~> 0.11.2'
 gem 'fog-aws', '~> 0.13.0'
 gem 'gibbon', '~> 2.2', '>= 2.2.4'
 gem 'react-rails', '~> 1.9'
+gem 'kindlegen', '~> 2.9', '>= 2.9.7'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'

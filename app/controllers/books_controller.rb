@@ -10,7 +10,7 @@ class BooksController < ApplicationController
 
   def editor # the editor, where all the magic happens. No associated view, all rendered via React
     @book = Book.find(params[:id])
-    render component: 'Editor', props: { book: @book }
+    render component: 'Editor', props: { book: @book, sections: @book.sections }
   end
 
   # DELETE /books/1

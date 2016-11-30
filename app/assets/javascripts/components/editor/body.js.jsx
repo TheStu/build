@@ -4,7 +4,7 @@ var Body = React.createClass({
 	},
   render: function() {
     return (
-    	<textarea onChange={this.handleChange}/>
+    	<textarea value={this.props.displaySection.body} onChange={this.handleChange}/>
   	);
   }
 });

@@ -2,7 +2,7 @@ var Title = React.createClass({
 
   render: function() {
     return (
-    	<h2>title</h2>
+    	<h2>{this.props.title}</h2>
   	);
   }
 });

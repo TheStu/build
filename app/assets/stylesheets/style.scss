@@ -2,6 +2,8 @@
 // SITE WIDE
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// http://www.colourlovers.com/palette/92095/Giant_Goldfish
+
 $blue: #69D2E7;
 $light_blue: #A7DBD8;
 $gray: #E0E4CC;
@@ -12,6 +14,10 @@ $orange: #FA6900;
 .alert-error { @extend .alert-danger; }
 .alert-success { @extend .alert-success; }
 .alert-alert { @extend .alert-warning; }
+.alert {
+	margin-bottom: 0;
+	margin: 10px;
+}
 
 
 .field_with_errors {
@@ -43,38 +49,84 @@ body, html {
 // BOOK#EDITOR
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-div[data-react-class="Editor"] {
+div[data-react-class="EditorContainer"] {
 	width: 100%;
 	height: calc(100% - 52px);
 }
+
 .editor {
 	width: 100%;
 	height: 100%;
-	.chapters {
-		height: 100%;
-		width: 20%;
-		background-color: $light_blue;
-		float: left;
-	}
+}
 
-	.text-area {
-		height: 100%;
-		width: 37%;
-		float: left;
-		text-align: center;
-		padding: 20px;
-		border-left: 3px solid $blue;
-		border-right: 3px solid $blue;
-		textarea {
-			width: 100%;
-			height: 100%;
-		}
-	}
+////////////////////////////////////////////////////////////
+// SECTIONS
+////////////////////////////////////////////////////////////
 
-	.preview {
-		height: 100%;
-		width: 43%;
-		float: left;
-		padding: 20px;
+.sections {
+	height: 100%;
+	width: 20%;
+	padding: 15px;
+	background-color: $light_blue;
+	float: left;
+	.section-name {
+		cursor: pointer;
 	}
+	.section-edit {
+		cursor: pointer;
+	}
+	.section-title-input {
+		max-width: 145px;
+	}
+	.section-title-input-btn {
+		margin-left: 5px;
+	}
+	ul {
+		list-style: none;
+		padding-left: 0;
+	}
+}
+
+////////////////////////////////////////////////////////////
+// TEXT-AREA
+////////////////////////////////////////////////////////////
+
+.text-area {
+	height: 100%;
+	width: 37%;
+	float: left;
+	text-align: center;
+	padding: 20px;
+	border-left: 3px solid $blue;
+	border-right: 3px solid $blue;
+	.text-area-footer {
+
+	}
+	textarea {
+		width: 100%;
+		height: calc(100% - 35px);
+		max-width: 100%;
+		max-height: calc(100% - 35px);
+		min-width: 100%;
+		min-height: calc(100% - 35px);
+	}
+}
+
+////////////////////////////////////////////////////////////
+// PREVIEW
+////////////////////////////////////////////////////////////
+
+.preview {
+	height: 100%;
+	width: 43%;
+	float: left;
+	padding: 20px;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+// BOOTSTRAP OVERRIDES
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.form-inline {
+	width: 100%;
 }

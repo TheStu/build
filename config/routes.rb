@@ -9,7 +9,8 @@ Rails.application.routes.draw do
   devise_for :users
   
   # BOOKS
-  resources :books, only: :new do
+  resources :sections, only: [:create, :update, :destroy]
+  resources :books, only: [:new, :update, :destroy] do
   	get 'editor', on: :member
   end
 end

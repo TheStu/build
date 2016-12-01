@@ -2,7 +2,7 @@ var Preview = React.createClass({
 
   render: function() {
     return (
-    	<p>{this.props.displaySection.body}</p>
+    	<p>{this.props.sections[this.props.currentSectionIndex].body}</p>
   	);
   }
 });

@@ -1,5 +1,7 @@
 class BooksController < ApplicationController
 
+  before_action :set_book, only: [:editor, :destroy]
+
   def new # creates a new book and opens it in the editor
     if @book = Book.create(title: 'untitled', user_id: current_user.id)
       redirect_to editor_book_path(@book)
@@ -9,8 +11,7 @@ class BooksController < ApplicationController
   end
 
   def editor # the editor, where all the magic happens. No associated view, all rendered via React
-    @book = Book.find(params[:id])
-    render component: 'Editor', props: { book: @book, sections: @book.sections }
+    render component: 'EditorContainer', props: { book: @book, sections: @book.sections }
   end
 
   # DELETE /books/1
@@ -24,6 +25,10 @@ class BooksController < ApplicationController
   end
 
   private
+
+    def set_book
+      @book = Book.find(params[:id])
+    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def book_params

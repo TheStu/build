@@ -9,7 +9,9 @@ Rails.application.routes.draw do
   devise_for :users
   
   # BOOKS
-  resources :sections, only: [:create, :update, :destroy]
+  resources :sections, only: [:create, :update, :destroy] do
+    get 'change_index', on: :member
+  end
   resources :books, only: [:new, :update, :destroy] do
   	get 'editor', on: :member
   end

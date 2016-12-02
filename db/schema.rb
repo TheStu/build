@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161201003119) do
+ActiveRecord::Schema.define(version: 20161202040348) do
 
   create_table "books", force: :cascade do |t|
     t.string   "title"
@@ -23,11 +23,12 @@ ActiveRecord::Schema.define(version: 20161201003119) do
   end
 
   create_table "sections", force: :cascade do |t|
-    t.string   "title",      default: "Untitled"
-    t.text     "body",       default: "body text goes here..."
+    t.string   "title",       default: "Untitled"
+    t.text     "body",        default: "body text goes here..."
     t.integer  "book_id"
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.integer  "order_index"
     t.index ["book_id"], name: "index_sections_on_book_id"
   end
 

@@ -69,6 +69,9 @@ div[data-react-class="EditorContainer"] {
 	padding: 15px;
 	background-color: $light_blue;
 	float: left;
+	.active-section-li {
+		font-weight: bold;
+	}
 	.section-name {
 		cursor: pointer;
 	}
@@ -109,6 +112,13 @@ div[data-react-class="EditorContainer"] {
 		max-height: calc(100% - 35px);
 		min-width: 100%;
 		min-height: calc(100% - 35px);
+	}
+	.saved-notice {
+		display: none;
+		position: absolute;
+		left: 10;
+		top: 10;
+		font-size: 30px;
 	}
 }
 

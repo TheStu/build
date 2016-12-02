@@ -1,12 +1,20 @@
 class BooksController < ApplicationController
 
-  before_action :set_book, only: [:editor, :destroy]
+  before_action :set_book, only: [:editor, :destroy, :update]
 
   def new # creates a new book and opens it in the editor
     if @book = Book.create(title: 'untitled', user_id: current_user.id)
       redirect_to editor_book_path(@book)
     else
       redirect_to root_path, alert: "Oops, something went wrong and we weren't able to create a new book. Please try again."
+    end
+  end
+
+  def update
+    if @book.update(book_params)
+      render json: @book
+    else
+      render json: @book.errors.full_messages, status: :unprocessable_entity
     end
   end
 

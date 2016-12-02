@@ -45,10 +45,10 @@ var Section = React.createClass({
 						<div className="form-group">
 		          <input className="form-control section-title-input input-sm" type="text" value={this.state.title} onChange={this.handleNameChange} />
 	          </div>
-		        <button className="btn btn-primary btn-xs section-title-input-btn" type="submit">
+		        <button disabled={this.state.title === "" ? true : false} className={"btn btn-primary btn-xs section-title-input-btn" + (this.state.title === "" ? " disabled" : "")} type="submit">
 		        	<i className="glyphicon glyphicon-ok" aria-hidden="true"></i>
 		        </button>
-		        <button className="btn btn-danger btn-xs section-title-input-btn" onClick={this.handleNoChange}>
+		        <button disabled={this.state.title === "" ? true : false} className={'btn btn-danger btn-xs section-title-input-btn' + (this.state.title === "" ? " disabled" : "")} onClick={this.handleNoChange}>
 		        	<i className="glyphicon glyphicon-remove" aria-hidden="true"></i>
 		        </button>
 		      </form>
@@ -59,6 +59,10 @@ var Section = React.createClass({
 	    	<span>
 					<span className="glyphicon glyphicon-pencil section-edit" aria-hidden="true" onClick={this.editName}></span>
 		    	<span className="section-name" onClick={this.props.handleNameClick}>{this.state.title}</span>
+		    	<span className="float-right">
+		    		<span className="glyphicon glyphicon-triangle-top section-index-up" aria-hidden="true" onClick={() => this.props.changeSectionIndex(this.props.currentSectionIndex + 1)}></span>
+		    		<span className="glyphicon glyphicon-triangle-bottom section-index-down" aria-hidden="true" onClick={() => this.props.changeSectionIndex(this.props.currentSectionIndex - 1)}></span>
+		    	</span>
 	    	</span>
 	  	);
   	}

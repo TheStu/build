@@ -75,21 +75,16 @@ var EditorContainer = React.createClass({
 		  });
 	  }
 	},
-	changeSectionIndex: function(targetSectionIndex) {
-		// change it in DB
+	changeSectionIndex: function(originSectionIndex, targetSectionIndex) {
 		var self = this;
 		var data = { 'section': { 'order_index': targetSectionIndex }};
 		$.ajax({
 	    type: 'PATCH',
-	    url: '/sections/change_index' + self.state.sections[this.state.currentSectionIndex].id,
+	    url: '/sections/' + self.state.sections[originSectionIndex].id + '/change_index',
 	    data: data,
 	    dataType: 'json',
 	    success: function(data) {
-	    	var dupSections = this.state.sections
-	    	var currentSection = this.state.sections[currentSectionIndex]
-	    	dupSections[currentSectionIndex] = this.state.sections[targetSectionIndex]
-	    	dupSections[targetSectionIndex] = currentSection
-	    	this.setState({ sections: dupSections })
+	    	self.handleIndexReorder(originSectionIndex, targetSectionIndex);
       },
       error: function(jqXHR, textStatus, errorThrown) {
       	JSON.parse(jqXHR.responseText).forEach((error) => {
@@ -97,6 +92,20 @@ var EditorContainer = React.createClass({
       	});
       }
 	  });
+	},
+	handleIndexReorder: function(originSectionIndex, targetSectionIndex) {
+		var dupSections = this.state.sections;
+		var currentSection = this.state.sections[originSectionIndex];
+		dupSections[originSectionIndex] = this.state.sections[targetSectionIndex];
+		dupSections[targetSectionIndex] = currentSection;
+		if ( originSectionIndex === this.state.currentSectionIndex ) {
+			this.setState({ 
+				sections: dupSections,
+				currentSectionIndex: targetSectionIndex
+			});
+		} else {
+			this.setState({ sections: dupSections });
+		}
 	},
 	handleRailsErrors: function(errors) {
   	JSON.parse(errors.responseText).forEach((error) => {

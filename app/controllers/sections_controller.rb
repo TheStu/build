@@ -12,18 +12,22 @@ class SectionsController < ApplicationController
   end
 
   def update
-    @target_section = Section.find(params[:order_index])
-    @old_index = @section.order_index
-    if @section.update(section_params) && @target_section.update(order_index: @old_index)
+    if @section.update(section_params)
       render json: @section
     else
-      render json: @section.errors.full_messages + @target_section.errors.full_messages, status: :unprocessable_entity
+      render json: @section.errors.full_messages, status: :unprocessable_entity
     end
   end
 
   def change_index
+    @target_section = Section.find_by_book_id_and_order_index(@section.book_id, section_params[:order_index])
+    @old_index = @section.order_index
     if @section.update(section_params)
-      render json: @section
+      if @target_section.update(order_index: @old_index)
+        render json: @section
+      else
+        render json: @target_section.errors.full_messages, status: :unprocessable_entity
+      end
     else
       render json: @section.errors.full_messages, status: :unprocessable_entity
     end

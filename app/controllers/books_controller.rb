@@ -19,7 +19,7 @@ class BooksController < ApplicationController
   end
 
   def editor # the editor, where all the magic happens. No associated view, all rendered via React
-    render component: 'EditorContainer', props: { book: @book, sections: @book.sections }
+    render component: 'EditorContainer', props: { book: @book, sections: @book.sections.order(:order_index) }
   end
 
   # DELETE /books/1

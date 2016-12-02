@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   
   # BOOKS
   resources :sections, only: [:create, :update, :destroy] do
-    get 'change_index', on: :member
+    patch 'change_index', on: :member
   end
   resources :books, only: [:new, :update, :destroy] do
   	get 'editor', on: :member

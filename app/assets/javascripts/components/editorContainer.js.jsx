@@ -3,7 +3,9 @@ var EditorContainer = React.createClass({
 		return {
 			sections: this.props.sections, // add an unsavedChanges boolean field
 			currentSectionIndex: 0,
-			isSectionBodyChanged: false
+			isSectionBodyChanged: false,
+			showCover: false,
+			coverUrl: this.props.cover_url
 		};
 	},
 	updateBook: function(book) {
@@ -24,7 +26,7 @@ var EditorContainer = React.createClass({
 	},
 	changeDisplayedSection: function(sectionIndex) {
 		this.updateSectionText();
-		this.setState({ currentSectionIndex: sectionIndex });
+		this.setState({ currentSectionIndex: sectionIndex, showCover: false });
 	},
 	changeSectionText: function(newText) {
 		var dupSections = this.state.sections;
@@ -105,9 +107,6 @@ var EditorContainer = React.createClass({
       }
 	  });
 	},
-	onDrop: function(files) {
-    console.log('Received files: ', files);
-  },
 	handleIndexReorder: function(originSectionIndex, targetSectionIndex) {
 		var dupSections = this.state.sections;
 		var currentSection = this.state.sections[originSectionIndex];
@@ -122,6 +121,9 @@ var EditorContainer = React.createClass({
 			this.setState({ sections: dupSections });
 		}
 	},
+	handleShowCover: function() {
+		this.setState({ showCover: true });
+	},
 	handleRailsErrors: function(errors) {
   	JSON.parse(errors.responseText).forEach((error) => {
 	  	$(".errors").append('<div class="alert alert-danger fade in widget-inner"><button type="button" class="close" data-dismiss="alert">×</button>' + error + '</div>');
@@ -132,17 +134,22 @@ var EditorContainer = React.createClass({
     	<div className="editor">
 	    	<div className="sections">
 		    	<Title 
+		    		showCover={this.state.showCover}
 		    		book={this.props.book}
 		    		handleRailsErrors={this.handleRailsErrors}
 	    		/>
 	    		<AddCover 
 	    			bookId={this.props.book.id}
+	    			handleShowCover={this.handleShowCover}
+	    			coverUrl={this.state.coverUrl}
+	    			showCover={this.state.showCover}
     			/>
 		    	<Sections 
 		    		sections={this.state.sections}
 		    		currentSectionIndex={this.state.currentSectionIndex} 
 		    		handleNameClick={this.changeDisplayedSection}
 		    		changeSectionIndex={this.changeSectionIndex}
+		    		showCover={this.state.showCover}
 	    		/>
 	    		<AddSection handleNewSection={this.addSection}/>
 	    	</div>
@@ -150,6 +157,8 @@ var EditorContainer = React.createClass({
 	    	<div className="text-area">
 	    		<span className="saved-notice">Saved!</span>
 		    	<TextArea
+		    		showCover={this.state.showCover}
+		    		coverUrl={this.state.coverUrl}
 		    		onChange={this.changeSectionText}
 		    		currentSectionIndex={this.state.currentSectionIndex}
 		    		sections={this.state.sections}

@@ -4,7 +4,7 @@ var Sections = React.createClass({
     	<ul>
     		{this.props.sections.map((section, index) => {
     			return (
-	    			<li key={section.id} className={"clearfix" + (this.props.currentSectionIndex == index ? " active-section-li" : "")}>
+	    			<li key={section.id} className={"clearfix" + ((this.props.currentSectionIndex == index && !this.props.showCover) ? " active-section-li" : "")}>
 	    				<Section
                 handleNameClick={() => this.props.handleNameClick(index)}
                 section={section}

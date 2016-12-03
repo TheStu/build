@@ -3,8 +3,14 @@ var TextArea = React.createClass({
 		this.props.onChange(e.target.value);
 	},
   render: function() {
-    return (
-    	<textarea value={this.props.sections[this.props.currentSectionIndex].body} onChange={this.handleChange}/>
-  	);
+  	if ( this.props.showCover ) {
+  		return (
+	  		<img src={this.props.coverUrl}/>
+			);
+  	} else {
+	    return (
+	    	<textarea value={this.props.sections[this.props.currentSectionIndex].body} onChange={this.handleChange}/>
+	  	);
+  	}
   }
 });

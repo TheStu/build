@@ -20,7 +20,11 @@ class BooksController < ApplicationController
 
   def editor # the editor, where all the magic happens. No associated view, all rendered via React
     gon.auth_token = form_authenticity_token
-    render component: 'EditorContainer', props: { book: @book, sections: @book.sections.order(:order_index) }
+    render component: 'EditorContainer', props: { 
+      book: @book, 
+      cover_url: @book.cover.file ? @book.cover.file.url : "",
+      sections: @book.sections.order(:order_index) 
+    }
   end
 
   # DELETE /books/1

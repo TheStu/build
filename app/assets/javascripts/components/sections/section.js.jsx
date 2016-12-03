@@ -59,7 +59,7 @@ var Section = React.createClass({
 	    	<span>
 					<span className="glyphicon glyphicon-pencil section-edit" aria-hidden="true" onClick={this.editName}></span>
 		    	<span className="section-name" onClick={this.props.handleNameClick}>{this.state.title}</span>
-		    	<span className="float-right">
+		    	<span className="pull-right">
 		    		<button disabled={this.props.isFirstSection} onClick={() => this.props.changeSectionIndex(this.props.index, this.props.index - 1)}>
 		    			<span className="glyphicon glyphicon-triangle-top section-index-up" aria-hidden="true" ></span>
 	    			</button>

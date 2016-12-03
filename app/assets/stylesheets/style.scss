@@ -90,6 +90,31 @@ div[data-react-class="EditorContainer"] {
 	}
 }
 
+.input-file {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.input-file + label {
+		@extend .btn, .btn-primary, .btn-sm;
+    margin: 10px 0 5px;
+}
+
+.input-file:focus + label {
+	outline: 1px dotted #000;
+	outline: -webkit-focus-ring-color auto 5px;
+}
+
+.input-file:focus + label,
+.input-file.has-focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}
+
 ////////////////////////////////////////////////////////////
 // TEXT-AREA
 ////////////////////////////////////////////////////////////

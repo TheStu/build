@@ -19,6 +19,7 @@ class BooksController < ApplicationController
   end
 
   def editor # the editor, where all the magic happens. No associated view, all rendered via React
+    gon.auth_token = form_authenticity_token
     render component: 'EditorContainer', props: { book: @book, sections: @book.sections.order(:order_index) }
   end
 
@@ -40,6 +41,6 @@ class BooksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def book_params
-      params.require(:book).permit(:title, :content, :author)
+      params.permit(:title, :content, :author, :cover)
     end
 end

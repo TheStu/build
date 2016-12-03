@@ -7,11 +7,13 @@ gem 'stripe', '~> 1.57.1'
 gem 'stripe_event', '~> 1.5', '>= 1.5.1'
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.7'
 gem 'exception_notification', '~> 4.2', '>= 4.2.1'
-gem 'carrierwave', '~> 0.11.2'
+gem 'carrierwave', '>= 1.0.0.rc', '< 2.0'
 gem 'fog-aws', '~> 0.13.0'
 gem 'gibbon', '~> 2.2', '>= 2.2.4'
 gem 'react-rails', '~> 1.9'
 gem 'kindlegen', '~> 2.9', '>= 2.9.7'
+gem 'gon', '~> 6.1'
+gem 'dropzonejs-rails', '~> 0.7.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
@@ -29,7 +31,7 @@ gem 'coffee-rails', '~> 4.2'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
+# gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
@@ -46,6 +48,7 @@ group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
   gem 'pry'
+  gem 'figaro', '~> 1.1', '>= 1.1.1'
 end
 
 group :development do

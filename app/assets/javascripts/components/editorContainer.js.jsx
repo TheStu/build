@@ -6,13 +6,29 @@ var EditorContainer = React.createClass({
 			isSectionBodyChanged: false
 		};
 	},
+	updateBook: function(book) {
+		var self = this;
+		$.ajax({
+	    type: 'PATCH',
+	    url: '/books/' + self.props.book.id,
+	    data: { book },
+	    dataType: 'json',
+	    success: function(data) {
+	    	// show cover
+	    	console.log("image upload success!");
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+      	self.handleRailsErrors(jqXHR);
+      }
+	  });
+	},
 	changeDisplayedSection: function(sectionIndex) {
 		this.updateSectionText();
 		this.setState({ currentSectionIndex: sectionIndex });
 	},
 	changeSectionText: function(newText) {
 		var dupSections = this.state.sections;
-		dupSections[this.state.currentSectionIndex].body = newText
+		dupSections[this.state.currentSectionIndex].body = newText;
 		this.setState({ 
 			sections: dupSections,
 			isSectionBodyChanged: true 
@@ -68,9 +84,7 @@ var EditorContainer = React.createClass({
 	        self.setState({ isSectionBodyChanged: false });
 	      },
 	      error: function(jqXHR, textStatus, errorThrown) {
-	      	JSON.parse(jqXHR.responseText).forEach((error) => {
-	  		  	$(".errors").append('<div class="alert alert-danger fade in widget-inner"><button type="button" class="close" data-dismiss="alert">×</button>' + error + '</div>');
-	      	});
+	      	self.handleRailsErrors(jqXHR);
 	      }
 		  });
 	  }
@@ -87,12 +101,13 @@ var EditorContainer = React.createClass({
 	    	self.handleIndexReorder(originSectionIndex, targetSectionIndex);
       },
       error: function(jqXHR, textStatus, errorThrown) {
-      	JSON.parse(jqXHR.responseText).forEach((error) => {
-  		  	$(".errors").append('<div class="alert alert-danger fade in widget-inner"><button type="button" class="close" data-dismiss="alert">×</button>' + error + '</div>');
-      	});
+      	self.handleRailsErrors(jqXHR);
       }
 	  });
 	},
+	onDrop: function(files) {
+    console.log('Received files: ', files);
+  },
 	handleIndexReorder: function(originSectionIndex, targetSectionIndex) {
 		var dupSections = this.state.sections;
 		var currentSection = this.state.sections[originSectionIndex];
@@ -120,6 +135,9 @@ var EditorContainer = React.createClass({
 		    		book={this.props.book}
 		    		handleRailsErrors={this.handleRailsErrors}
 	    		/>
+	    		<AddCover 
+	    			bookId={this.props.book.id}
+    			/>
 		    	<Sections 
 		    		sections={this.state.sections}
 		    		currentSectionIndex={this.state.currentSectionIndex} 

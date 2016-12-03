@@ -31,7 +31,7 @@ var Title = React.createClass({
 	        self.setState({ editing: false });
 	      },
 	      error: function(jqXHR, textStatus, errorThrown) {
-	      	this.props.handleRailsErrors(jqXHR);
+	      	this.props.handleRailsErrors(JSON.parse(jqXHR.responseText));
 	      }
 		  });
 		},

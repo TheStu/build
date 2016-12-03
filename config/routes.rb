@@ -14,5 +14,6 @@ Rails.application.routes.draw do
   end
   resources :books, only: [:new, :update, :destroy] do
   	get 'editor', on: :member
+    get 'delete-cover', on: :member
   end
 end

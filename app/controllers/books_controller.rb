@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
 
-  before_action :set_book, only: [:editor, :destroy, :update]
+  before_action :set_book, only: [:editor, :destroy, :update, :delete_cover]
 
   def new # creates a new book and opens it in the editor
     if @book = Book.create(title: 'untitled', user_id: current_user.id)
@@ -25,6 +25,15 @@ class BooksController < ApplicationController
       cover_url: @book.cover.file ? @book.cover.file.url : "",
       sections: @book.sections.order(:order_index) 
     }
+  end
+
+  def delete_cover
+    @book.remove_cover!
+    if @book.save
+      render json: @book
+    else
+      render json: @book.errors.full_messages, status: :unprocessable_entity
+    end
   end
 
   # DELETE /books/1

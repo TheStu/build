@@ -20,7 +20,7 @@ var EditorContainer = React.createClass({
 	    	console.log("image upload success!");
       },
       error: function(jqXHR, textStatus, errorThrown) {
-      	self.handleRailsErrors(jqXHR);
+      	self.handleRailsErrors(JSON.parse(jqXHR.responseText));
       }
 	  });
 	},
@@ -48,7 +48,7 @@ var EditorContainer = React.createClass({
 		    self.setState({ sections: self.state.sections.concat(data) });
 		  },
 		  error: function(jqXHR, textStatus, errorThrown) {
-		    self.handleRailsErrors(jqXHR);
+		    self.handleRailsErrors(JSON.parse(jqXHR.responseText));
 		  }
 		});
 	},
@@ -67,7 +67,23 @@ var EditorContainer = React.createClass({
 		    });
 		  },
 		  error: function(jqXHR, textStatus, errorThrown) {
-		    self.handleRailsErrors(jqXHR);
+		    self.handleRailsErrors(JSON.parse(jqXHR.responseText));
+		  }
+		});
+	},
+	destroyCover: function() {
+		var self = this;
+		$.ajax({
+		  type: 'GET',
+		  url: '/books/' + self.props.book.id + '/delete-cover',
+		  success: function(data) {
+		    self.setState({ 
+		    	showCover: false,
+		    	coverUrl: '' 
+		    });
+		  },
+		  error: function(jqXHR, textStatus, errorThrown) {
+		    self.handleRailsErrors(JSON.parse(jqXHR.responseText));
 		  }
 		});
 	},
@@ -86,7 +102,7 @@ var EditorContainer = React.createClass({
 	        self.setState({ isSectionBodyChanged: false });
 	      },
 	      error: function(jqXHR, textStatus, errorThrown) {
-	      	self.handleRailsErrors(jqXHR);
+	      	self.handleRailsErrors(JSON.parse(jqXHR.responseText));
 	      }
 		  });
 	  }
@@ -103,7 +119,7 @@ var EditorContainer = React.createClass({
 	    	self.handleIndexReorder(originSectionIndex, targetSectionIndex);
       },
       error: function(jqXHR, textStatus, errorThrown) {
-      	self.handleRailsErrors(jqXHR);
+      	self.handleRailsErrors(JSON.parse(jqXHR.responseText));
       }
 	  });
 	},
@@ -124,10 +140,21 @@ var EditorContainer = React.createClass({
 	handleShowCover: function() {
 		this.setState({ showCover: true });
 	},
+	handleCoverUploadSuccess: function(url) {
+		this.setState({ 
+			coverUrl: url,
+			showCover: true
+		});
+	},
 	handleRailsErrors: function(errors) {
-  	JSON.parse(errors.responseText).forEach((error) => {
-	  	$(".errors").append('<div class="alert alert-danger fade in widget-inner"><button type="button" class="close" data-dismiss="alert">×</button>' + error + '</div>');
-  	});
+		if ( typeof errors === 'array' ) {
+	  	errors.forEach((error) => {
+		  	$(".errors").append('<div class="alert alert-danger fade in widget-inner"><button type="button" class="close" data-dismiss="alert">×</button>' + error + '</div>');
+	  	});
+	  } else if ( typeof errors === 'string' ) {
+	  	$(".errors").append('<div class="alert alert-danger fade in widget-inner"><button type="button" class="close" data-dismiss="alert">×</button>' + errors + '</div>');
+	  }
+
 	},
   render: function() {
     return (
@@ -143,6 +170,8 @@ var EditorContainer = React.createClass({
 	    			handleShowCover={this.handleShowCover}
 	    			coverUrl={this.state.coverUrl}
 	    			showCover={this.state.showCover}
+	    			handleCoverUploadSuccess={this.handleCoverUploadSuccess}
+	    			handleCoverUploadFailure={this.handleRailsErrors}
     			/>
 		    	<Sections 
 		    		sections={this.state.sections}
@@ -168,6 +197,8 @@ var EditorContainer = React.createClass({
 		    		<DestroySection 
 			    		sectionCount={this.state.sections.length}
 			    		handleDestroySection={this.destroySection}
+			    		handleDestroyCover={this.destroyCover}
+			    		showCover={this.state.showCover}
 		    		/>
 	    		</div>
 	    	</div>
@@ -176,6 +207,8 @@ var EditorContainer = React.createClass({
 		    	<Preview
 		    		sections={this.state.sections}
 		    		currentSectionIndex={this.state.currentSectionIndex}
+		    		showCover={this.state.showCover}
+		    		coverUrl={this.state.coverUrl}
 	    		/>
 	    	</div>
     	</div>

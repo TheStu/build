@@ -14,6 +14,8 @@ gem 'react-rails', '~> 1.9'
 gem 'kindlegen', '~> 2.9', '>= 2.9.7'
 gem 'gon', '~> 6.1'
 gem 'dropzonejs-rails', '~> 0.7.3'
+gem 'eeepub', '~> 0.8.1', :git => 'git@github.com:TheStu/eeepub.git'
+gem 'rubyzip', '< 1.0.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'

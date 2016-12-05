@@ -1,6 +1,6 @@
 GIT
-  remote: git@github.com:TheStu/eeepub.git
-  revision: e120406d599d1ca27927e106c02caf3e14ff3976
+  remote: https://github.com/TheStu/eeepub.git
+  revision: bb52cc97ce53dc544f14bb12680633573dacae9e
   specs:
     eeepub (0.8.1)
       builder

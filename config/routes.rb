@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
 
   root 'statics#index'
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
   get 'about', to: 'statics#about'
   get 'contact', to: 'statics#contact'
 
-  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users
   
   # BOOKS

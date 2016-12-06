@@ -14,10 +14,4 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require dropzone
-//= require wysihtml
-//= require wysihtml-toolbar
-//= require parser_rules/advanced
-//= require react
-//= require react_ujs
-//= require components
 //= require_tree .

@@ -4,9 +4,11 @@ class BooksController < ApplicationController
 
   def new # creates a new book and opens it in the editor
     if @book = Book.create(title: 'untitled', user_id: current_user.id)
-      redirect_to editor_book_path(@book)
-    else
-      redirect_to root_path, alert: "Oops, something went wrong and we weren't able to create a new book. Please try again."
+      if Section.create(book: @book, order_index: 0) # todo - nest sections in books
+        redirect_to editor_book_path(@book)
+      else
+        redirect_to root_path, alert: "Oops, something went wrong and we weren't able to create a new book. Please try again."
+      end
     end
   end
 

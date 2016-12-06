@@ -1,11 +1,11 @@
 var TextArea = React.createClass({
 	componentDidMount: function() {
-		var editor = new wysihtml5.Editor("wysihtml-textarea", {
-      toolbar:      "wysihtml-toolbar",
-      //parserRules:  wysihtmlParserRules, // defined in parser rules set
-      //stylesheets:  "<%= stylesheet_path('wysihtml') %>", // optional, css to style the editor's content
-      //showToolbarAfterInit: false
-   	});
+		// var editor = new wysihtml5.Editor("wysihtml-textarea", {
+  //     toolbar:      "wysihtml-toolbar",
+  //     //parserRules:  wysihtmlParserRules, // defined in parser rules set
+  //     //stylesheets:  "<%= stylesheet_path('wysihtml') %>", // optional, css to style the editor's content
+  //     //showToolbarAfterInit: false
+  //  	});
 	},
 	handleChange: function(e) {
 		this.props.onChange(e.target.value);

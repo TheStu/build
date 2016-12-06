@@ -38,7 +38,7 @@ var EditorContainer = React.createClass({
 	},
 	addSection: function() {
 		var self = this;
-		var data = { 'section': { 'book_id': this.props.book.id, 'order_index': this.state.sections.length + 1 }};
+		var data = { 'section': { 'book_id': this.props.book.id, 'order_index': this.state.sections.length }};
 		$.ajax({
 		  type: 'POST',
 		  url: '/sections',

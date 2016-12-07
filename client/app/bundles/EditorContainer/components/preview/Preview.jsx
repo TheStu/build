@@ -1,6 +1,8 @@
-var Preview = React.createClass({
+import React, { PropTypes } from 'react';
 
-  render: function() {
+export default class Preview extends React.Component {
+  
+  render() {
   	if ( this.props.showCover ) {
   		return (
 	  		<img src={this.props.coverUrl}/>
@@ -11,4 +13,4 @@ var Preview = React.createClass({
     	);
   	}
   }
-});
+}

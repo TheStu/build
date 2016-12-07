@@ -1,24 +1,38 @@
-var Section = React.createClass({
-	getInitialState: function() {
-		return { 
+import React, { PropTypes } from 'react';
+
+export default class Section extends React.Component {
+
+	constructor(props) {
+		super(props);
+		this. editName = this. editName.bind(this);
+		this. handleNameChange = this. handleNameChange.bind(this);
+		this. handleNoChange = this. handleNoChange.bind(this);
+		this. handleEditSuccess = this. handleEditSuccess.bind(this);
+		this. handleSubmit = this. handleSubmit.bind(this);
+		this.state = {
 			editing: false,
 			title: this.props.section.title
 		}
-	},
-	editName: function() {
+	}
+
+	editName() {
 		this.setState({ editing: true });
-	},
-	handleNameChange: function(e) {
+	}
+
+	handleNameChange(e) {
     this.setState({ title: e.target.value });
-  },
-  handleNoChange: function(e) {
+  }
+
+  handleNoChange(e) {
 		e.preventDefault();
   	this.setState({ editing: false })
-  },
-  handleEditSuccess: function() {
+  }
+
+  handleEditSuccess() {
   	this.setState({ editing: false })
-  },
-	handleSubmit: function(e) {
+  }
+
+	handleSubmit(e) {
 		var self = this;
 		var data = { 'section': { 'title': this.state.title }};
 		e.preventDefault();
@@ -36,8 +50,9 @@ var Section = React.createClass({
       	});
       }
 	  });
-	},
-  render: function() {
+	}
+
+  render() {
   	if ( this.state.editing ) {
 	    return (
 	    	<span>
@@ -71,4 +86,4 @@ var Section = React.createClass({
 	  	);
   	}
   }
-});
+}

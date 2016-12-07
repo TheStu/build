@@ -1,14 +1,38 @@
-var EditorContainer = React.createClass({
-	getInitialState: function() {
-		return {
+import React, { PropTypes } from 'react';
+
+import Preview from './preview/Preview';
+import AddCover from './sections/AddCover';
+import AddSection from './sections/AddSection';
+import Sections from './sections/Sections';
+import Title from './sections/Title';
+import DestroySection from './textarea/DestroySection';
+import TextArea from './textarea/TextArea';
+
+export default class EditorContainer extends React.Component {
+	constructor(props) {
+		super(props);
+		this. updateBook = this. updateBook.bind(this);
+		this. changeDisplayedSection = this. changeDisplayedSection.bind(this);
+		this. changeSectionText = this. changeSectionText.bind(this);
+		this. addSection = this. addSection.bind(this);
+		this. destroySection = this. destroySection.bind(this);
+		this. destroyCover = this. destroyCover.bind(this);
+		this. updateSectionText = this. updateSectionText.bind(this);
+		this. changeSectionIndex = this. changeSectionIndex.bind(this);
+		this. handleIndexReorder = this. handleIndexReorder.bind(this);
+		this. handleShowCover = this. handleShowCover.bind(this);
+		this. handleCoverUploadSuccess = this. handleCoverUploadSuccess.bind(this);
+		this. handleRailsErrors = this. handleRailsErrors.bind(this);
+		this.state = {
 			sections: this.props.sections, // add an unsavedChanges boolean field
 			currentSectionIndex: 0,
 			isSectionBodyChanged: false,
 			showCover: false,
 			coverUrl: this.props.cover_url
-		};
-	},
-	updateBook: function(book) {
+		}
+	}
+
+	updateBook(book) {
 		var self = this;
 		$.ajax({
 	    type: 'PATCH',
@@ -23,20 +47,23 @@ var EditorContainer = React.createClass({
       	self.handleRailsErrors(JSON.parse(jqXHR.responseText));
       }
 	  });
-	},
-	changeDisplayedSection: function(sectionIndex) {
+	}
+
+	changeDisplayedSection(sectionIndex) {
 		this.updateSectionText();
 		this.setState({ currentSectionIndex: sectionIndex, showCover: false });
-	},
-	changeSectionText: function(newText) {
+	}
+
+	changeSectionText(newText) {
 		var dupSections = this.state.sections;
 		dupSections[this.state.currentSectionIndex].body = newText;
 		this.setState({ 
 			sections: dupSections,
 			isSectionBodyChanged: true 
 		});
-	},
-	addSection: function() {
+	}
+
+	addSection() {
 		var self = this;
 		var data = { 'section': { 'book_id': this.props.book.id, 'order_index': this.state.sections.length }};
 		$.ajax({
@@ -51,8 +78,9 @@ var EditorContainer = React.createClass({
 		    self.handleRailsErrors(JSON.parse(jqXHR.responseText));
 		  }
 		});
-	},
-	destroySection: function() {
+	}
+
+	destroySection() {
 		var self = this;
 		var section_id = this.state.sections[this.state.currentSectionIndex].id;
 		var dupSections = this.state.sections;
@@ -70,8 +98,9 @@ var EditorContainer = React.createClass({
 		    self.handleRailsErrors(JSON.parse(jqXHR.responseText));
 		  }
 		});
-	},
-	destroyCover: function() {
+	}
+
+	destroyCover() {
 		var self = this;
 		$.ajax({
 		  type: 'GET',
@@ -86,8 +115,9 @@ var EditorContainer = React.createClass({
 		    self.handleRailsErrors(JSON.parse(jqXHR.responseText));
 		  }
 		});
-	},
-	updateSectionText: function() {
+	}
+
+	updateSectionText() {
 		if ( this.state.isSectionBodyChanged ) {
 			var self = this;
 			var data = { 'section': { 'body': this.state.sections[this.state.currentSectionIndex].body }};
@@ -106,8 +136,9 @@ var EditorContainer = React.createClass({
 	      }
 		  });
 	  }
-	},
-	changeSectionIndex: function(originSectionIndex, targetSectionIndex) {
+	}
+
+	changeSectionIndex(originSectionIndex, targetSectionIndex) {
 		var self = this;
 		var data = { 'section': { 'order_index': targetSectionIndex }};
 		$.ajax({
@@ -122,8 +153,9 @@ var EditorContainer = React.createClass({
       	self.handleRailsErrors(JSON.parse(jqXHR.responseText));
       }
 	  });
-	},
-	handleIndexReorder: function(originSectionIndex, targetSectionIndex) {
+	}
+
+	handleIndexReorder(originSectionIndex, targetSectionIndex) {
 		var dupSections = this.state.sections;
 		var currentSection = this.state.sections[originSectionIndex];
 		dupSections[originSectionIndex] = this.state.sections[targetSectionIndex];
@@ -136,17 +168,20 @@ var EditorContainer = React.createClass({
 		} else {
 			this.setState({ sections: dupSections });
 		}
-	},
-	handleShowCover: function() {
+	}
+
+	handleShowCover() {
 		this.setState({ showCover: true });
-	},
-	handleCoverUploadSuccess: function(url) {
+	}
+
+	handleCoverUploadSuccess(url) {
 		this.setState({ 
 			coverUrl: url,
 			showCover: true
 		});
-	},
-	handleRailsErrors: function(errors) {
+	}
+
+	handleRailsErrors(errors) {
 		if ( typeof errors === 'array' ) {
 	  	errors.forEach((error) => {
 		  	$(".errors").append('<div class="alert alert-danger fade in widget-inner"><button type="button" class="close" data-dismiss="alert">×</button>' + error + '</div>');
@@ -154,13 +189,13 @@ var EditorContainer = React.createClass({
 	  } else if ( typeof errors === 'string' ) {
 	  	$(".errors").append('<div class="alert alert-danger fade in widget-inner"><button type="button" class="close" data-dismiss="alert">×</button>' + errors + '</div>');
 	  }
+	}
 
-	},
-  render: function() {
+  render() {
     return (
     	<div className="editor">
 	    	<div className="sections">
-		    	<Title 
+		    	<Title
 		    		showCover={this.state.showCover}
 		    		book={this.props.book}
 		    		handleRailsErrors={this.handleRailsErrors}
@@ -214,4 +249,4 @@ var EditorContainer = React.createClass({
     	</div>
   	);
   }
-});
+}

@@ -1,0 +1,8 @@
+<%= react_component("EditorContainer", props: { 
+    book: @book, 
+    cover_url: @book.cover.file ? @book.cover.file.url : "",
+    sections: @book.sections.order(:order_index),
+  }, 
+  prerender: false,
+  id: 'rails-react-editor')
+%>

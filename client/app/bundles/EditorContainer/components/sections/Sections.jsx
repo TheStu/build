@@ -1,5 +1,9 @@
-var Sections = React.createClass({
-  render: function() {
+import React, { PropTypes } from 'react';
+import Section from './Section';
+
+export default class Sections extends React.Component {
+  
+  render() {
     return (
     	<ul>
     		{this.props.sections.map((section, index) => {
@@ -20,4 +24,4 @@ var Sections = React.createClass({
   		</ul>
   	);
   }
-});
+}

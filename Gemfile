@@ -10,7 +10,6 @@ gem 'exception_notification', '~> 4.2', '>= 4.2.1'
 gem 'carrierwave', '~> 1.0.0.rc'
 gem 'fog-aws', '~> 0.13.0'
 gem 'gibbon', '~> 2.2', '>= 2.2.4'
-# gem 'react-rails', '~> 1.9'
 gem 'react_on_rails', '~> 6.3', '>= 6.3.1'
 gem 'kindlegen', '~> 2.9', '>= 2.9.7'
 gem 'gon', '~> 6.1'
@@ -70,3 +69,5 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem 'mini_racer', platforms: :ruby

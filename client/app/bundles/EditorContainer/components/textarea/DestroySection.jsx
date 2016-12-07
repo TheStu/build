@@ -1,5 +1,8 @@
-var DestroySection = React.createClass({
-  render: function() {
+import React, { PropTypes } from 'react';
+
+export default class DestroySection extends React.Component {
+	
+  render() {
   	return (
     	<button 
     		onClick={ this.props.showCover ? this.props.handleDestroyCover : this.props.handleDestroySection }
@@ -7,4 +10,4 @@ var DestroySection = React.createClass({
   		>Delete { this.props.showCover ? "Cover" : "Section" }</button>
   	);
   }
-});
+}

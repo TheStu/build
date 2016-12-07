@@ -1,5 +1,8 @@
-var AddCover = React.createClass({
-	componentDidMount: function() {
+import React, { PropTypes } from 'react';
+
+export default class AddCover extends React.Component {
+	
+	componentDidMount() {
 		Dropzone.options.coverUpload = { 
 			paramName: "cover",
 			method: "put",
@@ -13,8 +16,9 @@ var AddCover = React.createClass({
 				this.props.handleCoverUploadFailure(response);
 			}
 		}
-	},
-  render: function() {
+	}
+
+  render() {
   	if ( this.props.coverUrl != "" ) {
   		if ( this.props.showCover ) {
   			return (
@@ -35,4 +39,4 @@ var AddCover = React.createClass({
 	  	);
     }
   }
-});
+}

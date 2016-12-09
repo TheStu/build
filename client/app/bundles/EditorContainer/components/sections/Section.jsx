@@ -4,67 +4,29 @@ export default class Section extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this. editName = this. editName.bind(this);
-		this. handleNameChange = this. handleNameChange.bind(this);
-		this. handleNoChange = this. handleNoChange.bind(this);
-		this. handleEditSuccess = this. handleEditSuccess.bind(this);
-		this. handleSubmit = this. handleSubmit.bind(this);
-		this.state = {
-			editing: false,
-			title: this.props.section.title
-		}
+		this.handleTitleChange = this.handleTitleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-	editName() {
-		this.setState({ editing: true });
-	}
-
-	handleNameChange(e) {
-    this.setState({ title: e.target.value });
+	handleTitleChange(e) {
+		this.props.handleTitleChange(e.target.value);
   }
 
-  handleNoChange(e) {
-		e.preventDefault();
-  	this.setState({ editing: false })
+  handleSubmit(e) {
+  	e.preventDefault();
+  	this.props.handleNewTitleSubmit();
   }
-
-  handleEditSuccess() {
-  	this.setState({ editing: false })
-  }
-
-	handleSubmit(e) {
-		var self = this;
-		var data = { 'section': { 'title': this.state.title }};
-		e.preventDefault();
-		$.ajax({
-	    type: 'PATCH',
-	    url: '/sections/' + self.props.section.id,
-	    data: data,
-	    dataType: 'json',
-	    success: function(data) {
-        self.setState({ editing: false });
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-      	JSON.parse(jqXHR.responseText).forEach((error) => {
-  		  	$(".errors").append('<div class="alert alert-danger fade in widget-inner"><button type="button" class="close" data-dismiss="alert">×</button>' + error + '</div>');
-      	});
-      }
-	  });
-	}
 
   render() {
-  	if ( this.state.editing ) {
+  	if ( this.props.isEditingTitle && this.props.currentSectionIndex == this.props.index ) {
 	    return (
 	    	<span>
 					<form className="form-inline" onSubmit={this.handleSubmit}>
 						<div className="form-group">
-		          <input className="form-control section-title-input input-sm" type="text" value={this.state.title} onChange={this.handleNameChange} />
+		          <input className="form-control section-title-input input-sm" type="text" value={this.props.section.title} onChange={this.handleTitleChange} />
 	          </div>
-		        <button disabled={this.state.title === "" ? true : false} className={"btn btn-primary btn-xs section-title-input-btn" + (this.state.title === "" ? " disabled" : "")} type="submit">
+		        <button disabled={this.props.section.title === "" ? true : false} className={"btn btn-primary btn-xs section-title-input-btn" + (this.props.section.title === "" ? " disabled" : "")} type="submit">
 		        	<i className="glyphicon glyphicon-ok" aria-hidden="true"></i>
-		        </button>
-		        <button disabled={this.state.title === "" ? true : false} className={'btn btn-danger btn-xs section-title-input-btn' + (this.state.title === "" ? " disabled" : "")} onClick={this.handleNoChange}>
-		        	<i className="glyphicon glyphicon-remove" aria-hidden="true"></i>
 		        </button>
 		      </form>
 	    	</span>
@@ -72,8 +34,8 @@ export default class Section extends React.Component {
   	} else {
 	    return (
 	    	<span>
-					<span className="glyphicon glyphicon-pencil section-edit" aria-hidden="true" onClick={this.editName}></span>
-		    	<span className="section-name" onClick={this.props.handleNameClick}>{this.state.title}</span>
+					<span className="glyphicon glyphicon-pencil section-edit" aria-hidden="true" onClick={this.props.handleEditTitle}></span>
+		    	<span className="section-name" onClick={this.props.handleNameClick}>{this.props.section.title}</span>
 		    	<span className="pull-right">
 		    		<button disabled={this.props.isFirstSection} onClick={() => this.props.changeSectionIndex(this.props.index, this.props.index - 1)}>
 		    			<span className="glyphicon glyphicon-triangle-top section-index-up" aria-hidden="true" ></span>

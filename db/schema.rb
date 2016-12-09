@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161205071849) do
+ActiveRecord::Schema.define(version: 20161207065327) do
 
   create_table "books", force: :cascade do |t|
     t.string   "title"
@@ -27,6 +27,14 @@ ActiveRecord::Schema.define(version: 20161205071849) do
     t.string   "subject"
     t.string   "language"
     t.index ["user_id"], name: "index_books_on_user_id"
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.string   "image"
+    t.integer  "book_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_images_on_book_id"
   end
 
   create_table "sections", force: :cascade do |t|

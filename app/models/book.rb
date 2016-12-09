@@ -5,6 +5,7 @@ class Book < ApplicationRecord
 
 	belongs_to :user
 	has_many :sections
+	has_many :images
 
 	def build_xhtml_files
 		self.sections.each do |section| # delete this file, if present, before building again ?

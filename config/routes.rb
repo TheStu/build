@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   devise_for :users
   
-  # BOOKS
+  resources :images, only: [:create]
   resources :sections, only: [:create, :update, :destroy] do
     patch 'change_index', on: :member
   end

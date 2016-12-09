@@ -17,6 +17,7 @@ gem 'dropzonejs-rails', '~> 0.7.3'
 gem 'eeepub', '~> 0.8.1'
 gem 'rubyzip', '< 1.0.0'
 gem 'wysihtml-rails', '~> 0.5.5'
+gem 'mini_magick', '~> 4.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'

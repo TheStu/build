@@ -20,6 +20,9 @@ export default class EditorContainer extends React.Component {
 		this. updateSectionText = this. updateSectionText.bind(this);
 		this. changeSectionIndex = this. changeSectionIndex.bind(this);
 		this. handleIndexReorder = this. handleIndexReorder.bind(this);
+		this. handleEditSectionTitle = this. handleEditSectionTitle.bind(this);
+		this. handleSectionTitleChange = this. handleSectionTitleChange.bind(this);
+		this. updateSectionTitle = this. updateSectionTitle.bind(this);
 		this. handleShowCover = this. handleShowCover.bind(this);
 		this. handleCoverUploadSuccess = this. handleCoverUploadSuccess.bind(this);
 		this. handleRailsErrors = this. handleRailsErrors.bind(this);
@@ -27,6 +30,7 @@ export default class EditorContainer extends React.Component {
 			sections: this.props.sections, // add an unsavedChanges boolean field
 			currentSectionIndex: 0,
 			isSectionBodyChanged: false,
+			isEditingSectionTitle: false,
 			showCover: false,
 			coverUrl: this.props.cover_url
 		}
@@ -138,6 +142,34 @@ export default class EditorContainer extends React.Component {
 	  }
 	}
 
+	handleEditSectionTitle() {
+		this.setState({ isEditingSectionTitle: true });
+	}
+
+	handleSectionTitleChange(newTitle) {
+		var dupSections = this.state.sections;
+		dupSections[this.state.currentSectionIndex].title = newTitle;
+		this.setState({ sections: dupSections });
+	}
+
+	updateSectionTitle() {
+		console.log('made it!');
+		var self = this;
+		var data = { 'section': { 'title': this.state.sections[this.state.currentSectionIndex].title }};
+		$.ajax({
+	    type: 'PATCH',
+	    url: '/sections/' + self.state.sections[this.state.currentSectionIndex].id,
+	    data: data,
+	    dataType: 'json',
+	    success: function(data) {
+        self.setState({ isEditingSectionTitle: false });
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+      	self.handleRailsErrors(JSON.parse(jqXHR.responseText));
+      }
+	  });
+	}
+
 	changeSectionIndex(originSectionIndex, targetSectionIndex) {
 		var self = this;
 		var data = { 'section': { 'order_index': targetSectionIndex }};
@@ -212,8 +244,13 @@ export default class EditorContainer extends React.Component {
 		    		sections={this.state.sections}
 		    		currentSectionIndex={this.state.currentSectionIndex} 
 		    		handleNameClick={this.changeDisplayedSection}
+		    		handleNameChange={this.updateSectionName}
 		    		changeSectionIndex={this.changeSectionIndex}
 		    		showCover={this.state.showCover}
+		    		isEditingTitle={this.state.isEditingSectionTitle}
+		    		handleEditTitle={this.handleEditSectionTitle}
+		    		handleTitleChange={this.handleSectionTitleChange}
+		    		handleNewTitleSubmit={this.updateSectionTitle}
 	    		/>
 	    		<AddSection handleNewSection={this.addSection}/>
 	    	</div>
@@ -227,6 +264,7 @@ export default class EditorContainer extends React.Component {
 		    		currentSectionIndex={this.state.currentSectionIndex}
 		    		sections={this.state.sections}
 		    		updateSectionText={this.updateSectionText}
+		    		bookId={this.props.book.id}
 	    		/>
 	    		<div className="text-area-footer">
 		    		<DestroySection 

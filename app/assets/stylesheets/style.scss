@@ -30,6 +30,10 @@ $orange: #FA6900;
 		}
 }
 
+.center {
+  text-align: center;
+}
+
 body, html {
     width: 100% !important;
     height: 100% !important;
@@ -129,6 +133,16 @@ body, html {
 	}
 }
 
+.cover-container {
+  height: 100%;
+  width: 100%;
+}
+
+.cover-img-text-area {
+  max-height: 100%;
+  max-width: 100%;
+}
+
 ////////////////////////////////////////////////////////////
 // PREVIEW
 ////////////////////////////////////////////////////////////
@@ -138,6 +152,11 @@ body, html {
 	width: 43%;
 	float: left;
 	padding: 20px;
+}
+
+.cover-img-preview-area {
+  max-height: 100%;
+  max-width: 100%;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////

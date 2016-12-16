@@ -26,11 +26,8 @@ class BooksController < ApplicationController
 
   def delete_cover
     @book.remove_cover!
-    if @book.save
-      render json: @book
-    else
-      render json: @book.errors.full_messages, status: :unprocessable_entity
-    end
+    @book.save
+    head :ok
   end
 
   # DELETE /books/1

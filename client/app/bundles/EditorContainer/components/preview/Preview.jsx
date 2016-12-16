@@ -10,7 +10,7 @@ export default class Preview extends React.Component {
   render() {
   	if ( this.props.showCover ) {
   		return (
-	  		<img src={this.props.coverUrl}/>
+	  		<img className="cover-img-preview-area" src={this.props.coverUrl}/>
 			);
   	} else {
 	    return (

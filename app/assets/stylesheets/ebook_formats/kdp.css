@@ -1,0 +1,43 @@
+.pg-text-area h1, .pg-text-area h2, .pg-text-area h3, .pg-text-area h4, .pg-text-area h5, .pg-text-area h6, .pg-text-area p {
+  margin: 0;
+  padding: 0;
+}
+
+.pg-text-area h3.body-h3 {
+  margin: 2em 0 1em;
+  font-size: 125%;
+  font-weight: bold;
+}
+
+.pg-text-area div.pg-header {
+  text-align: center;
+  margin: 3em 5% 0;
+  min-height: 10em;
+}
+
+.pg-text-area p.body-paragraph {
+  text-indent: 1.5em;
+  line-height: 1.4em;
+  text-align: justify;
+}
+
+.pg-text-area p.first-paragraph {
+  text-indent: 0;
+}
+
+.pg-text-area p.indent {
+  text-indent: 1em;
+}
+
+.pg-text-area p.outdent {
+  text-indent: 0;
+}
+
+.pg-text-area span.first-letter {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 400%;
+  float: left;
+  line-height: 75% !important;
+  margin: 0 0.05em 0.05em 0;
+}

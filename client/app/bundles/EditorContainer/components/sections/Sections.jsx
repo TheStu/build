@@ -8,7 +8,7 @@ export default class Sections extends React.Component {
     	<ul>
     		{this.props.sections.map((section, index) => {
     			return (
-	    			<li key={section.id} className={"clearfix" + ((this.props.currentSectionIndex == index && !this.props.showCover) ? " active-section-li" : "")}>
+	    			<li key={section.id} className={"clearfix section-li" + ((this.props.currentSectionIndex == index && !this.props.showCover) ? " active-section-li" : "")}>
 	    				<Section
                 handleNameClick={() => this.props.handleNameClick(index)}
                 handleNameChange={this.props.handleNameChange}
@@ -22,6 +22,7 @@ export default class Sections extends React.Component {
                 handleEditTitle={this.props.handleEditTitle}
                 handleTitleChange={this.props.handleTitleChange}
                 handleNewTitleSubmit={this.props.handleNewTitleSubmit}
+                showCover={this.props.showCover}
               />
 	  				</li>
   				);

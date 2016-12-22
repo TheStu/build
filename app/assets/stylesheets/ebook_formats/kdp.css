@@ -17,7 +17,7 @@
 
 .pg-text-area p.body-paragraph {
   text-indent: 1.5em;
-  line-height: 1.4em;
+  line-height: 1.5em;
   text-align: justify;
 }
 
@@ -40,4 +40,21 @@
   float: left;
   line-height: 75% !important;
   margin: 0 0.05em 0.05em 0;
+}
+
+@media amzn-kf8 { 
+  span.first-letter { 
+    font-weight:normal;
+    font-size:320%;
+    float:left;
+    margin-top:-0.3225em;
+    margin-bottom:-0.3245em;
+  }
+}
+
+@media amzn-mobi { 
+  span.first-letter { 
+    font-size:3em;
+    font-weight: bold;
+  }
 }

@@ -7,6 +7,7 @@
 $blue: #69D2E7;
 $light_blue: #A7DBD8;
 $gray: #E0E4CC;
+$dark_gray: #bbbfa8;
 $light_orange: #F38630;
 $orange: #FA6900;
 
@@ -19,7 +20,6 @@ $orange: #FA6900;
 	margin: 10px;
 }
 
-
 .field_with_errors {
 		display: inline;
 		label {
@@ -28,6 +28,32 @@ $orange: #FA6900;
 		input, select, textarea {
 				border: 1px solid red !important;
 		}
+}
+
+.glyphicon {
+  color: $light_orange;
+  &:hover, &:active, &:focus {
+    color: $orange;
+  }
+}
+
+.glyphicon-triangle-bottom {
+  top: 2px;
+}
+
+.btn {
+  border-bottom-width: 3px;
+  font-weight: bold;
+}
+
+.btn-sm {
+  border-bottom-width: 3px;
+  font-weight: bold;
+  &:hover, &:active, &:focus {
+    .glyphicon {
+      color: $orange;
+    }
+  }
 }
 
 .center {
@@ -40,12 +66,49 @@ body, html {
     min-height: 100%;
 }
 
+.editor-container-fluid {
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+hr {
+  border-color: $orange;
+  margin: 15px 25%;
+  border-width: 2px;
+}
+
+.placeholder {
+  color: #ccc;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 // HEADER
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 .navbar {
 	margin-bottom: 0;
+}
+
+.navbar-default {
+  border-left-width: 0;
+  border-right-width: 0;
+  border-top-width: 0;
+  border-bottom-width: 3px;
+  border-color: $dark_gray;
+  background-color: $gray;
+  border-radius: 0;
+  .navbar-nav > li > a {
+    color: white;
+    margin: 9px 12px;
+    @extend .btn, .btn-primary, .btn-sm;
+    &:hover, &:active, &:focus {
+      background-color: #286090;
+      border-color: #204d74;
+      color: white;
+    }
+  }
 }
 
 
@@ -55,7 +118,7 @@ body, html {
 
 #rails-react-editor {
 	width: 100%;
-	height: calc(100% - 52px);
+	height: calc(100% - 53px);
 }
 
 .editor {
@@ -71,27 +134,42 @@ body, html {
 	height: 100%;
 	width: 20%;
 	padding: 15px;
-	background-color: $light_blue;
+	background-color: $gray;
 	float: left;
+  .book-title {
+    margin: 5px 0;
+    font-size: 18px;
+  }
+  .section-li {
+    padding: 4px 0;
+    border-top: 1px solid white;
+  }
 	.active-section-li {
 		font-weight: bold;
 	}
 	.section-name {
-		cursor: pointer;
+    padding: 2px 6px;
 	}
 	.section-edit {
 		cursor: pointer;
-	}
-	.section-title-input {
-		max-width: 145px;
+    margin-right: 5px;
 	}
 	.section-title-input-btn {
 		margin-left: 5px;
 	}
+  .section-index-up {
+    margin-right: 4px;
+  }
 	ul {
 		list-style: none;
 		padding-left: 0;
 	}
+  .cover-ul {
+    margin-bottom: 0;
+    li {
+      padding: 4px 0;
+    }
+  }
 }
 
 .dz-message {
@@ -108,22 +186,23 @@ body, html {
 
 .text-area {
 	height: 100%;
-	width: 37%;
+	width: 40%;
 	float: left;
 	padding: 20px;
-	border-left: 3px solid $blue;
-	border-right: 3px solid $blue;
+	border-left: 3px solid $dark_gray;
+	border-right: 3px solid $dark_gray;
 	.text-area-footer {
 
 	}
-	textarea {
-		width: 100%;
-		height: calc(100% - 35px);
-		max-width: 100%;
-		max-height: calc(100% - 35px);
-		min-width: 100%;
-		min-height: calc(100% - 35px);
-	}
+  .react-wysiwyg-wrapper {
+    height: calc(100% - 20px);
+  }
+	.react-wysiwyg-editor {
+    padding: 10px;
+    border: 1px solid #ddd;
+    overflow-y: scroll;
+    height: calc(100% - 60px);
+  }
 	.saved-notice {
 		display: none;
 		position: absolute;
@@ -143,20 +222,48 @@ body, html {
   max-width: 100%;
 }
 
+.meta-data-form {
+  .react-datepicker__input-container {
+    width: 100%;
+  }
+  #meta-data-description {
+    max-width: 100%;
+    max-height: 102px;
+  }
+}
+
 ////////////////////////////////////////////////////////////
 // PREVIEW
 ////////////////////////////////////////////////////////////
 
 .preview {
-	height: 100%;
-	width: 43%;
+	height: calc(100% - 10px);
+	width: 40%;
 	float: left;
-	padding: 20px;
+	padding: 20px 20px 0;
+  margin-top: 10px;
+  font-family:'Bookerly';
+  font-weight: normal;
+  font-style: normal;
+  overflow-y: hidden;
+  box-sizing: border-box;
+  background-image: image-url('kindle.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  text-align: center;
+  .pg-text-area {
+    padding: 65px 75px 0;
+    overflow-y: hidden;
+    height: calc(100% - 50px);
+    text-align: left;
+  }
 }
 
 .cover-img-preview-area {
   max-height: 100%;
   max-width: 100%;
+  padding: 65px 0 45px;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////

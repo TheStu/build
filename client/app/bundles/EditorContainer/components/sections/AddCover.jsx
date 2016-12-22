@@ -26,14 +26,14 @@ export default class AddCover extends React.Component {
     } else {
       if ( this.props.showCover ) {
         return (
-          <ul>
-            <li className="active-section-li">Cover</li>
+          <ul className="cover-ul">
+            <li className="active-section-li"><span className="btn btn-primary btn-xs btn-round">Cover</span></li>
           </ul>
         );
       } else {
         return (
-          <ul>
-            <li onClick={this.props.handleShowCover}>Cover</li>
+          <ul className="cover-ul">
+            <li onClick={this.props.handleShowCover}><span className="btn btn-primary btn-xs btn-round">Cover</span></li>
           </ul>
         );
       }

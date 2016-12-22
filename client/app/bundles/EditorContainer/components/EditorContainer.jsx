@@ -4,48 +4,119 @@ import Preview from './preview/Preview';
 import AddCover from './sections/AddCover';
 import AddSection from './sections/AddSection';
 import Sections from './sections/Sections';
-import Title from './sections/Title';
 import DestroySection from './textarea/DestroySection';
-import TextArea from './textarea/TextArea';
+import TextAreaContainer from './textarea/TextAreaContainer';
 
 export default class EditorContainer extends React.Component {
 	constructor(props) {
 		super(props);
-		this. updateBook = this. updateBook.bind(this);
-		this. changeDisplayedSection = this. changeDisplayedSection.bind(this);
-		this. changeSectionText = this. changeSectionText.bind(this);
-		this. addSection = this. addSection.bind(this);
-		this. destroySection = this. destroySection.bind(this);
-		this. destroyCover = this. destroyCover.bind(this);
-		this. updateSectionText = this. updateSectionText.bind(this);
-		this. changeSectionIndex = this. changeSectionIndex.bind(this);
-		this. handleIndexReorder = this. handleIndexReorder.bind(this);
-		this. handleEditSectionTitle = this. handleEditSectionTitle.bind(this);
-		this. handleSectionTitleChange = this. handleSectionTitleChange.bind(this);
-		this. updateSectionTitle = this. updateSectionTitle.bind(this);
-		this. handleShowCover = this. handleShowCover.bind(this);
-		this. handleCoverUploadSuccess = this. handleCoverUploadSuccess.bind(this);
-		this. handleRailsErrors = this. handleRailsErrors.bind(this);
+    this.handleBookTitleChange = this.handleBookTitleChange.bind(this);
+    this.handleBookAuthorChange = this.handleBookAuthorChange.bind(this);
+    this.handleBookPublishedDateChange = this.handleBookPublishedDateChange.bind(this);
+    this.handleBookSubtitleChange = this.handleBookSubtitleChange.bind(this);
+    this.handleBookPublisherChange = this.handleBookPublisherChange.bind(this);
+    this.handleBookDescriptionChange = this.handleBookDescriptionChange.bind(this);
+    this.handleBookSubjectChange = this.handleBookSubjectChange.bind(this);
+    this.handleBookLanguageChange = this.handleBookLanguageChange.bind(this);
+    this.handleBookIsbnChange = this.handleBookIsbnChange.bind(this);
+    this.handleBookVersionChange = this.handleBookVersionChange.bind(this);
+    this.updateBook = this.updateBook.bind(this);
+		this.showMetaData = this.showMetaData.bind(this);
+		this.changeDisplayedSection = this.changeDisplayedSection.bind(this);
+		this.changeSectionText = this.changeSectionText.bind(this);
+		this.addSection = this.addSection.bind(this);
+		this.destroySection = this.destroySection.bind(this);
+		this.destroyCover = this.destroyCover.bind(this);
+		this.updateSectionText = this.updateSectionText.bind(this);
+		this.changeSectionIndex = this.changeSectionIndex.bind(this);
+		this.handleIndexReorder = this.handleIndexReorder.bind(this);
+		this.handleEditSectionTitle = this.handleEditSectionTitle.bind(this);
+		this.handleSectionTitleChange = this.handleSectionTitleChange.bind(this);
+		this.updateSectionTitle = this.updateSectionTitle.bind(this);
+		this.handleShowCover = this.handleShowCover.bind(this);
+		this.handleCoverUploadSuccess = this.handleCoverUploadSuccess.bind(this);
+		this.handleRailsErrors = this.handleRailsErrors.bind(this);
 		this.state = {
+      book: this.props.book,
 			sections: this.props.sections, // add an unsavedChanges boolean field
 			currentSectionIndex: 0,
 			isSectionBodyChanged: false,
 			isEditingSectionTitle: false,
 			showCover: false,
+      showMetaData: false,
 			coverUrl: this.props.cover_url
 		}
 	}
 
-	updateBook(book) {
+  handleBookTitleChange(newData) {
+    var dupBook = this.state.book;
+    dupBook.title = newData;
+    this.setState({ book: dupBook })
+  }
+
+  handleBookAuthorChange(newData) {
+    var dupBook = this.state.book;
+    dupBook.author = newData;
+    this.setState({ book: dupBook })
+  }
+
+  handleBookPublishedDateChange(newData) {
+    var dupBook = this.state.book;
+    dupBook.published_at = newData;
+    this.setState({ book: dupBook })
+  }
+
+  handleBookSubtitleChange(newData) {
+    var dupBook = this.state.book;
+    dupBook.subtitle = newData;
+    this.setState({ book: dupBook })
+  }
+
+  handleBookPublisherChange(newData) {
+    var dupBook = this.state.book;
+    dupBook.publisher = newData;
+    this.setState({ book: dupBook })
+  }
+
+  handleBookDescriptionChange(newData) {
+    var dupBook = this.state.book;
+    dupBook.description = newData;
+    this.setState({ book: dupBook })
+  }
+
+  handleBookSubjectChange(newData) {
+    var dupBook = this.state.book;
+    dupBook.subject = newData;
+    this.setState({ book: dupBook })
+  }
+
+  handleBookLanguageChange(newData) {
+    var dupBook = this.state.book;
+    dupBook.language = newData;
+    this.setState({ book: dupBook })
+  }
+
+  handleBookIsbnChange(newData) {
+    var dupBook = this.state.book;
+    dupBook.isbn = newData;
+    this.setState({ book: dupBook })
+  }
+
+  handleBookVersionChange(newData) {
+    var dupBook = this.state.book;
+    dupBook.version = newData;
+    this.setState({ book: dupBook })
+  }
+
+	updateBook() {
 		var self = this;
 		$.ajax({
 	    type: 'PATCH',
 	    url: '/books/' + self.props.book.id,
-	    data: { book },
+	    data: self.state.book,
 	    dataType: 'json',
 	    success: function(data) {
-	    	// show cover
-	    	console.log("image upload success!");
+        self.setState({ showMetaData: false });
       },
       error: function(jqXHR, textStatus, errorThrown) {
       	self.handleRailsErrors(JSON.parse(jqXHR.responseText));
@@ -55,7 +126,11 @@ export default class EditorContainer extends React.Component {
 
 	changeDisplayedSection(sectionIndex) {
 		this.updateSectionText();
-		this.setState({ currentSectionIndex: sectionIndex, showCover: false });
+		this.setState({ 
+      currentSectionIndex: sectionIndex,
+      showCover: false,
+      showMetaData: false
+    });
 	}
 
 	changeSectionText(newText) {
@@ -120,6 +195,13 @@ export default class EditorContainer extends React.Component {
 		  }
 		});
 	}
+
+  showMetaData() {
+    this.setState({ 
+      showMetaData: true, 
+      showCover: false
+    });
+  }
 
 	updateSectionText() {
 		if ( this.state.isSectionBodyChanged ) {
@@ -227,11 +309,9 @@ export default class EditorContainer extends React.Component {
     return (
     	<div className="editor">
 	    	<div className="sections">
-		    	<Title
-		    		showCover={this.state.showCover}
-		    		book={this.props.book}
-		    		handleRailsErrors={this.handleRailsErrors}
-	    		/>
+          <h1 className="book-title">{this.props.book.title}</h1>
+          <button className="btn btn-primary btn-sm" onClick={this.showMetaData}>Edit Meta Data</button>
+          <hr />
 	    		<AddCover 
 	    			bookId={this.props.book.id}
 	    			handleShowCover={this.handleShowCover}
@@ -252,19 +332,32 @@ export default class EditorContainer extends React.Component {
 		    		handleTitleChange={this.handleSectionTitleChange}
 		    		handleNewTitleSubmit={this.updateSectionTitle}
 	    		/>
+          <hr />
 	    		<AddSection handleNewSection={this.addSection}/>
 	    	</div>
 
 	    	<div className="text-area">
 	    		<span className="saved-notice">Saved!</span>
-		    	<TextArea
+		    	<TextAreaContainer
 		    		showCover={this.state.showCover}
+            showMetaData={this.state.showMetaData}
 		    		coverUrl={this.state.coverUrl}
 		    		onChange={this.changeSectionText}
 		    		currentSectionIndex={this.state.currentSectionIndex}
 		    		sections={this.state.sections}
 		    		updateSectionText={this.updateSectionText}
-		    		bookId={this.props.book.id}
+            book={this.props.book}
+            handleBookUpdate={this.updateBook}
+            handleTitleChange={this.handleBookTitleChange}
+            handleAuthorChange={this.handleBookAuthorChange}
+            handlePublishedDateChange={this.handleBookPublishedDateChange}
+            handleSubtitleChange={this.handleBookSubtitleChange}
+            handlePublisherChange={this.handleBookPublisherChange}
+            handleDescriptionChange={this.handleBookDescriptionChange}
+            handleSubjectChange={this.handleBookSubjectChange}
+            handleLanguageChange={this.handleBookLanguageChange}
+            handleIsbnChange={this.handleBookIsbnChange}
+            handleVersionChange={this.handleBookVersionChange}
 	    		/>
 	    		<div className="text-area-footer">
 		    		<DestroySection 
@@ -272,6 +365,7 @@ export default class EditorContainer extends React.Component {
 			    		handleDestroySection={this.destroySection}
 			    		handleDestroyCover={this.destroyCover}
 			    		showCover={this.state.showCover}
+              showMetaData={this.state.showMetaData}
 		    		/>
 	    		</div>
 	    	</div>

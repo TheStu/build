@@ -3,7 +3,7 @@ class BooksController < ApplicationController
   before_action :set_book, only: [:editor, :destroy, :update, :delete_cover]
 
   def new # creates a new book and opens it in the editor
-    if @book = Book.create(title: 'untitled', user_id: current_user.id)
+    if @book = Book.create(title: 'untitled', user_id: current_user.id, uuid: SecureRandom.uuid)
       if Section.create(book: @book, order_index: 0) # todo - nest sections in books
         redirect_to editor_book_path(@book)
       else

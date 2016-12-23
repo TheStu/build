@@ -172,10 +172,12 @@ hr {
   }
 }
 
-.dz-message {
+.dropzone-area {
 	cursor: pointer;
 	padding: 10px;
-	border: 1px dashed black;
+  border: 2px dashed $orange;
+  margin-bottom: 15px;
+  background-color: white;
 }
 
 

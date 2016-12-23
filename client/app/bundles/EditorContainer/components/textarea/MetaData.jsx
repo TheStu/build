@@ -18,7 +18,6 @@ export default class MetaData extends React.Component {
     this.handleSubjectChange = this.handleSubjectChange.bind(this);
     this.handleLanguageChange = this.handleLanguageChange.bind(this);
     this.handleIsbnChange = this.handleIsbnChange.bind(this);
-    this.handleVersionChange = this.handleVersionChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -56,10 +55,6 @@ export default class MetaData extends React.Component {
 
   handleIsbnChange(e) {
     this.props.handleIsbnChange(e.target.value);
-  }
-
-  handleVersionChange(e) {
-    this.props.handleVersionChange(e.target.value);
   }
 
   handleSubmit(e) {
@@ -129,7 +124,7 @@ export default class MetaData extends React.Component {
           </div>
 
           <div className="row">
-            <div className="col-sm-4">
+            <div className="col-sm-6">
               <div className="form-group">
                 <select defaultValue={this.props.book.language || ''} id="meta-data-language" className="input-sm form-control" type="text" onChange={this.handleLanguageChange} >
                   <option className="placeholder" value="" disabled>Language...</option>
@@ -209,15 +204,9 @@ export default class MetaData extends React.Component {
               </div>
             </div>
 
-            <div className="col-sm-4">
+            <div className="col-sm-6">
               <div className="form-group">
                 <input placeholder="ISBN" id="meta-data-isbn" className="input-sm form-control" type="text" value={this.props.book.isbn} onChange={this.handleIsbnChange} />
-              </div>
-            </div>
-
-            <div className="col-sm-4">
-              <div className="form-group">
-                <input placeholder="Version" id="meta-data-version" className="input-sm form-control" type="text" value={this.props.book.version} onChange={this.handleVersionChange} />
               </div>
             </div>
           </div>

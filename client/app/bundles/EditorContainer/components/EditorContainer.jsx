@@ -19,7 +19,6 @@ export default class EditorContainer extends React.Component {
     this.handleBookSubjectChange = this.handleBookSubjectChange.bind(this);
     this.handleBookLanguageChange = this.handleBookLanguageChange.bind(this);
     this.handleBookIsbnChange = this.handleBookIsbnChange.bind(this);
-    this.handleBookVersionChange = this.handleBookVersionChange.bind(this);
     this.updateBook = this.updateBook.bind(this);
 		this.showMetaData = this.showMetaData.bind(this);
 		this.changeDisplayedSection = this.changeDisplayedSection.bind(this);
@@ -99,12 +98,6 @@ export default class EditorContainer extends React.Component {
   handleBookIsbnChange(newData) {
     var dupBook = this.state.book;
     dupBook.isbn = newData;
-    this.setState({ book: dupBook })
-  }
-
-  handleBookVersionChange(newData) {
-    var dupBook = this.state.book;
-    dupBook.version = newData;
     this.setState({ book: dupBook })
   }
 
@@ -357,7 +350,6 @@ export default class EditorContainer extends React.Component {
             handleSubjectChange={this.handleBookSubjectChange}
             handleLanguageChange={this.handleBookLanguageChange}
             handleIsbnChange={this.handleBookIsbnChange}
-            handleVersionChange={this.handleBookVersionChange}
 	    		/>
 	    		<div className="text-area-footer">
 		    		<DestroySection 

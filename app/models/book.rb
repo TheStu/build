@@ -23,11 +23,17 @@ class Book < ApplicationRecord
     # https://github.com/skoji/gepub/blob/master/examples/generate_example.rb
 
     book = GEPUB::Book.new
-    book.language = 'en'
-    book.set_main_id 'http:/example.jp/bookid_in_url', 'BookID', 'URL'
-    book.add_title self.title
+    book.language = self.language
+    book.publisher = self.publisher
+    book.date = self.published_at
+    book.description = self.description
+    book.subject = self.subject
+    book.set_primary_identifier self.isbn || self.uuid, 'BookID', (self.isbn ? "ISBN" : 'uuid')
+    book.add_title(self.title, nil, GEPUB::TITLE_TYPE::MAIN).set_display_seq(1)
+    book.add_title(self.subtitle, nil, GEPUB::TITLE_TYPE::SUBTITLE).set_display_seq(2)
     book.add_creator self.author
-    # book.add_date '2012-02-29T00:00:00Z'
+    # book.add_metadata "Generator", "Book Build"
+    # isbn
 
     File.open("tmp/book_#{self.id}_cover.jpg") do
       |io|
@@ -40,7 +46,7 @@ class Book < ApplicationRecord
     end
 
     book.ordered {
-      self.sections.each do |section| # each by proper order
+      self.sections.order(:order_index).each do |section|
         book.add_item("text/#{section.title.parameterize}.xhtml").add_content(StringIO.new(section.render_html_output)).toc_text(section.title)
       end
     }
